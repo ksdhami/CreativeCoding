@@ -1,7 +1,6 @@
-// https://www.youtube.com/watch?v=7GwhYcUqypk&list=PLyRZnpOSgMj3K8AV2I6UldnvTj6d_Zrf0&index=5
+// https://www.youtube.com/watch?v=JQ6NqMd-yCw&list=PLyRZnpOSgMj3K8AV2I6UldnvTj6d_Zrf0&index=6
 
-// using random to make decisions of lines
-// random rule used to determine the output
+// refactor for reuseability 
 
 const CRYSTAL_SIZE = 500;   // size of crystals to be made
 const SIDES = 6;    // number of sides that crystal will have 
@@ -24,18 +23,10 @@ function draw() {
     testLines();
 }
 
-// design constraint function used for testing 
 function testLines() {
-    const randLines = random(1);    // num of shapes to draw
-    let numShapes;
-    if(randLines >0.5) {
-        numShapes = SIDES;
-    } else {
-        numShapes = SIDES*2;
-    }
+    let numShapes = randomSelectTwo() ? SIDES : SIDES*2;
 
-    const randColors = floor(random(0, PALETTE.length));    // colour of shapes
-    const strokeColor = PALETTE[randColors];
+    const strokeColor = getRandomFromPalette();
 
     noFill();
     stroke(PALETTE[0]); // outside circle
@@ -57,4 +48,18 @@ function testLines() {
         }
         
     pop();
+}
+
+function randomSelectTwo() {
+    const randLines = random(1);    // num of shapes to draw; 6 or 12
+    if(randLines >0.5) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function getRandomFromPalette() {
+    const randColors = floor(random(0, PALETTE.length));    // colour of shapes
+    return PALETTE[randColors];
 }
