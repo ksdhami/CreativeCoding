@@ -1,6 +1,6 @@
 // https://www.youtube.com/watch?v=tYDtsk5tOgM&list=PLyRZnpOSgMj3K8AV2I6UldnvTj6d_Zrf0&index=10
 
-// outline circles 
+// choosing combinations 
 
 const CRYSTAL_SIZE = 500;   // size of crystals to be made; divide by 2 for radius
 const SIDES = 6;    // number of sides that crystal will have 
@@ -21,9 +21,24 @@ function setup() {
 
 function draw() {
     // testLines();
-    outlineShape();
-    simpleLines();
-    circles(); 
+    // outlineShape();
+    // simpleLines();
+    // circles(); 
+
+    let picker = random(1);
+    if(picker>0.1) {
+        outlineShape();
+    }
+
+    picker = random(1);
+    if(picker>0.2) {
+        simpleLines();
+    }
+
+    picker = random(1);
+    if(picker>0.35) {
+        circles();
+    }
 }
 
 function circles() {
@@ -33,6 +48,7 @@ function circles() {
     const center = (CRYSTAL_SIZE/2) - (shapeSize/2);
     const strokeColor = getRandomFromPalette();
 
+    noFill();
     stroke(strokeColor);
     strokeWeight(1);
 
