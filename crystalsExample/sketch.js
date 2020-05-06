@@ -1,4 +1,4 @@
-// https://www.youtube.com/watch?v=tYDtsk5tOgM&list=PLyRZnpOSgMj3K8AV2I6UldnvTj6d_Zrf0&index=10
+// https://www.youtube.com/watch?v=XJPRr1JH7JE&list=PLyRZnpOSgMj3K8AV2I6UldnvTj6d_Zrf0&index=11
 
 // choosing combinations 
 
@@ -24,47 +24,49 @@ function draw() {
     // outlineShape();
     // simpleLines();
     // circles(); 
+    const layer = new Circles();
+    layer.render();
 
-    let picker = random(1);
-    if(picker>0.1) {
-        outlineShape();
-    }
+    // let picker = random(1);
+    // if(picker>0.1) {
+    //     outlineShape();
+    // }
 
-    picker = random(1);
-    if(picker>0.2) {
-        simpleLines();
-    }
+    // picker = random(1);
+    // if(picker>0.2) {
+    //     simpleLines();
+    // }
 
-    picker = random(1);
-    if(picker>0.35) {
-        circles();
-    }
+    // picker = random(1);
+    // if(picker>0.35) {
+    //     circles();
+    // }
 }
 
-function circles() {
-    const numCircles = SIDES;
-    const angle = 360/numCircles;
-    const shapeSize = (CRYSTAL_SIZE/2) * 0.93;
-    const center = (CRYSTAL_SIZE/2) - (shapeSize/2);
-    const strokeColor = getRandomFromPalette();
+// function circles() {
+//     const numShapes = SIDES;
+//     const angle = 360/numShapes;
+//     const shapeSize = (CRYSTAL_SIZE/2) * 0.93;
+//     const position = (CRYSTAL_SIZE/2) - (shapeSize/2);
+//     const strokeColor = getRandomFromPalette();
 
-    noFill();
-    stroke(strokeColor);
-    strokeWeight(1);
+//     noFill();
+//     stroke(strokeColor);
+//     strokeWeight(1);
 
-    push()
-        translate(width/2, height/2);
-        for (let i = 0; i <= numCircles; i++) {
-            ellipse(center, 0, shapeSize, shapeSize);
-            rotate(angle);
-        }
-    pop()
-}
+//     push()
+//         translate(width/2, height/2);
+//         for (let i = 0; i <= numShapes; i++) {
+//             ellipse(position, 0, shapeSize, shapeSize);
+//             rotate(angle);
+//         }
+//     pop()
+// }
 
 function simpleLines() {
-    const innerCircles = 8;
-    const numInnerCircles = randomSelectTwo() ? innerCircles : int(innerCircles * 1.25);   // 8 or 10
-    const step = (CRYSTAL_SIZE/2)/numInnerCircles;  // distance between each inner circle
+    const stepsOut = 8;
+    const numInnerCircles = randomSelectTwo() ? stepsOut : int(stepsOut * 1.25);   // 8 or 10
+    const singleStep = (CRYSTAL_SIZE/2)/numInnerCircles;  // distance between each inner circle
     const start = floor(random(0, numInnerCircles));    // 0 to last-1
     const stop = floor(random(start, numInnerCircles+1));   // start to last
 
@@ -83,7 +85,7 @@ function simpleLines() {
         translate(width/2, height/2);
         // create lines for each number of sides 
         for(let i = 0; i < numShapes; i++) {
-            line(start*step, 0, stop*step, 0);
+            line(start*singleStep, 0, stop*singleStep, 0);
             rotate(angle);
         }
     pop();
