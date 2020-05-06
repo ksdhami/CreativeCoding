@@ -1,139 +1,43 @@
-// https://www.youtube.com/watch?v=XJPRr1JH7JE&list=PLyRZnpOSgMj3K8AV2I6UldnvTj6d_Zrf0&index=11
+const CRYSTAL_SIZE = 150; // size of crystals to be made; divide by 2 for radius
+const SIDES = 6; // number of sides that crystal will have
 
-// choosing combinations 
+const COLUMNS = 3;
+const ROWS = 4;
+const MARGIN = CRYSTAL_SIZE / 2;
+const PADDING = CRYSTAL_SIZE * 0.2;
+const GRIDBOX = CRYSTAL_SIZE + PADDING;
 
-const CRYSTAL_SIZE = 500;   // size of crystals to be made; divide by 2 for radius
-const SIDES = 6;    // number of sides that crystal will have 
 let PALETTE = [];
+let ALL_CRYSTALS = [];
 
 function setup() {
-    createCanvas(530, 530, SVG);
+	const totalX = MARGIN * 2 + GRIDBOX * COLUMNS;
+	const totalY = MARGIN * 2 + GRIDBOX * ROWS;
+	createCanvas(totalX, totalY, SVG);
 
-    PALETTE = [
-        color(255, 52, 154),    // pink
-        color(4, 0, 152),    // blue
-    ];
+	PALETTE = [
+		color(255, 52, 154), // pink
+		color(4, 0, 152), // blue
+	];
 
-    noLoop();
-    angleMode(DEGREES);
-    rectMode(CENTER);
+	noLoop();
+	angleMode(DEGREES);
+	rectMode(CENTER);
 }
 
 function draw() {
-    // testLines();
-    // outlineShape();
-    // simpleLines();
-    // circles(); 
-    const layer = new Circles();
-    layer.render();
+	// go to point on screen and draw a crystal
+	// continue to do this until screen is filled
 
-    // let picker = random(1);
-    // if(picker>0.1) {
-    //     outlineShape();
-    // }
+	for (let x = 0; x < COLUMNS; x++) {
+		for (let y = 0; y < ROWS; y++) {
+			const posX = MARGIN * 2 + x * GRIDBOX;
+			const posY = MARGIN * 2 + y * GRIDBOX;
+			ALL_CRYSTALS.push(new Crystal(posX, posY));
+		}
+	}
 
-    // picker = random(1);
-    // if(picker>0.2) {
-    //     simpleLines();
-    // }
-
-    // picker = random(1);
-    // if(picker>0.35) {
-    //     circles();
-    // }
+	ALL_CRYSTALS.forEach((crystal) => {
+		crystal.render();
+	});
 }
-
-// function circles() {
-//     const numShapes = SIDES;
-//     const angle = 360/numShapes;
-//     const shapeSize = (CRYSTAL_SIZE/2) * 0.93;
-//     const position = (CRYSTAL_SIZE/2) - (shapeSize/2);
-//     const strokeColor = getRandomFromPalette();
-
-//     noFill();
-//     stroke(strokeColor);
-//     strokeWeight(1);
-
-//     push()
-//         translate(width/2, height/2);
-//         for (let i = 0; i <= numShapes; i++) {
-//             ellipse(position, 0, shapeSize, shapeSize);
-//             rotate(angle);
-//         }
-//     pop()
-// }
-
-function simpleLines() {
-    const stepsOut = 8;
-    const numInnerCircles = randomSelectTwo() ? stepsOut : int(stepsOut * 1.25);   // 8 or 10
-    const singleStep = (CRYSTAL_SIZE/2)/numInnerCircles;  // distance between each inner circle
-    const start = floor(random(0, numInnerCircles));    // 0 to last-1
-    const stop = floor(random(start, numInnerCircles+1));   // start to last
-
-
-    let numShapes = randomSelectTwo() ? SIDES : SIDES*2;
-    const weight = randomSelectTwo() ? 1:3;
-    const strokeColor = getRandomFromPalette();
-
-    // rotation variable for lines 
-    const angle = 360 / numShapes;
-
-    noFill();
-    stroke(strokeColor);
-    strokeWeight(weight);
-    push();
-        translate(width/2, height/2);
-        // create lines for each number of sides 
-        for(let i = 0; i < numShapes; i++) {
-            line(start*singleStep, 0, stop*singleStep, 0);
-            rotate(angle);
-        }
-    pop();
-}
-
-function outlineShape() {
-    const strokeColor = getRandomFromPalette();
-    const weight = randomSelectTwo() ? 1:3;
-    const hexagonTrue = randomSelectTwo();  // decide what shape to draw
-
-    stroke(strokeColor);
-    strokeWeight(weight);
-
-    push();
-        translate(width/2, height/2);
-        if(hexagonTrue) {   // create either hexagons or circles
-            hexagon(0, 0, CRYSTAL_SIZE/2);
-        } else {
-            ellipse(0, 0, CRYSTAL_SIZE, CRYSTAL_SIZE);
-        }
-    pop();
-}
-
-function testLines() {
-    let numShapes = randomSelectTwo() ? SIDES : SIDES*2;
-
-    const strokeColor = getRandomFromPalette();
-
-    noFill();
-    stroke(PALETTE[0]); // outside circle
-
-    push();
-        translate(width/2, height/2);
-
-        // ellipse the size of crystal 
-        ellipse(0, 0, CRYSTAL_SIZE, CRYSTAL_SIZE);
-        stroke(strokeColor); // inner lines
-
-        // rotation variable for lines 
-        const angle = 360 / numShapes;
-
-        // create lines for each number of sides 
-        for(let i = 0; i < numShapes; i++) {
-            line(0, 0, 0, CRYSTAL_SIZE / 2);
-            rotate(angle);
-        }
-        
-    pop();
-}
-
-
